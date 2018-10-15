@@ -4,7 +4,7 @@ void setup()
 	size(500,500);
 	background(0);
 	noStroke();
-	Explosion = new NormalParticle[300];
+	Explosion = new NormalParticle[10];
 	for(int i = 0; i < Explosion.length; i++)
 	{
 		Explosion[i] = new NormalParticle();
@@ -17,26 +17,29 @@ void draw()
 	{
 		Explosion[i].show();
 		Explosion[i].move();
+		System.out.println(Explosion[0].myAngle);
 	}
 }
 class NormalParticle
 {
-	double myX,myY,mySpd,myAngle;
+	double myX,myY,mySpd,myAngle,radius;
 	int myColor;
 	NormalParticle()
 	{
 		myAngle = Math.random()*(2*Math.PI);
 		//myX = myY = 250;
-		myX = 250 + (Math.random()*250)*(Math.cos(myAngle));
-		myY = 250 + (Math.random()*250)*(Math.sin(myAngle));
-		mySpd = Math.random()*5;
+		radius = (Math.random()*250);
+		myX = 250 + radius*(Math.cos(myAngle));
+		myY = 250 + radius*(Math.sin(myAngle));
+		mySpd = .25;
 		myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+		//myColor = 255;
 	}
 	void move()
 	{
 		myAngle = myAngle + mySpd;
-		myX = Math.cos(myAngle);
-		myY = Math.sin(myAngle);
+		myX = 250 + radius*Math.cos(myAngle);
+		myY = 250 + radius*Math.sin(myAngle);
 	}
 	void show()
 	{
