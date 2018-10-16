@@ -1,50 +1,56 @@
-NormalParticle[] Explosion;
+NormalParticle[] Star;
 void setup()
 {
 	size(500,500);
 	background(0);
-	noStroke();
-	Explosion = new NormalParticle[10];
-	for(int i = 0; i < Explosion.length; i++)
+	//noStroke();
+	stroke(255);
+	Star = new NormalParticle[1000];
+	for(int i = 0; i < Star.length; i++)
 	{
-		Explosion[i] = new NormalParticle();
+		Star[i] = new NormalParticle();
 	}
 }
 void draw()
 {
 	//background(0);
-	for(int i = 0; i < Explosion.length; i++)
+	for(int i = 0; i < Star.length; i++)
 	{
-		Explosion[i].show();
-		Explosion[i].move();
-		System.out.println(Explosion[0].myAngle);
+		Star[i].show();
+		Star[i].move();
+		System.out.println(Star[0].currentAngle);
 	}
 }
 class NormalParticle
 {
-	double myX,myY,mySpd,myAngle,radius;
+	double myX,myY,mySpd,myAngle,radius,currentAngle;
 	int myColor;
 	NormalParticle()
 	{
 		myAngle = Math.random()*(2*Math.PI);
-		//myX = myY = 250;
-		radius = (Math.random()*250);
-		myX = 250 + radius*(Math.cos(myAngle));
-		myY = 250 + radius*(Math.sin(myAngle));
-		mySpd = .25;
-		myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
-		//myColor = 255;
+		currentAngle = myAngle;
+		radius = (Math.random()*500);
+		myX = 250 + radius*(Math.cos(currentAngle));
+		myY = 250 + radius*(Math.sin(currentAngle));
+		mySpd = .01;
+		//myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+		myColor = 255;
 	}
 	void move()
 	{
-		myAngle = myAngle + mySpd;
-		myX = 250 + radius*Math.cos(myAngle);
-		myY = 250 + radius*Math.sin(myAngle);
+		currentAngle = currentAngle + mySpd;
+		myX = 250 + radius*Math.cos(currentAngle);
+		myY = 250 + radius*Math.sin(currentAngle);
 	}
 	void show()
 	{
 		fill(myColor);
-		ellipse((int)myX,(int)myY,5,5);
+		point((int)myX,(int)myY);
+		if(currentAngle > (3*Math.PI))
+		{
+			background(0);
+			currentAngle = myAngle;
+		}
 	}
 }
 interface Particle
