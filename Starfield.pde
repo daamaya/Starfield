@@ -13,44 +13,40 @@ void setup()
 }
 void draw()
 {
-	//background(0);
 	for(int i = 0; i < Star.length; i++)
 	{
 		Star[i].show();
 		Star[i].move();
-		System.out.println(Star[0].currentAngle);
+		if(Star[i].myAngle > (2.5*Math.PI))
+		{
+			background(0);
+			for(int j = 0; j < Star.length; j++)
+				Star[j].myAngle = Math.random()*(2*Math.PI);
+		}
 	}
 }
 class NormalParticle
 {
-	double myX,myY,mySpd,myAngle,radius,currentAngle;
-	int myColor;
+	private double myX,myY,mySpd,myAngle,radius;
+	private int myColor;
 	NormalParticle()
 	{
 		myAngle = Math.random()*(2*Math.PI);
-		currentAngle = myAngle;
 		radius = (Math.random()*500);
-		myX = 250 + radius*(Math.cos(currentAngle));
-		myY = 250 + radius*(Math.sin(currentAngle));
+		myX = 250 + radius*(Math.cos(myAngle));
+		myY = 250 + radius*(Math.sin(myAngle));
 		mySpd = .01;
-		//myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
-		myColor = 255;
 	}
+
 	void move()
 	{
-		currentAngle = currentAngle + mySpd;
-		myX = 250 + radius*Math.cos(currentAngle);
-		myY = 250 + radius*Math.sin(currentAngle);
+		myAngle += mySpd;
+		myX = 250 + radius*Math.cos(myAngle);
+		myY = 250 + radius*Math.sin(myAngle);
 	}
 	void show()
 	{
-		fill(myColor);
 		point((int)myX,(int)myY);
-		if(currentAngle > (3*Math.PI))
-		{
-			background(0);
-			currentAngle = myAngle;
-		}
 	}
 }
 interface Particle
