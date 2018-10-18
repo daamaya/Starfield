@@ -25,7 +25,7 @@ void draw()
 		}
 	}
 }
-class NormalParticle
+class NormalParticle //implements Particle
 {
 	private double myX,myY,mySpd,myAngle,radius;
 	private int myColor;
