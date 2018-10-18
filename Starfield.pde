@@ -4,7 +4,7 @@ void setup()
 	size(500,500);
 	background(0);
 	//noStroke();
-	stroke(255);
+	//stroke(255);
 	Star = new NormalParticle[1000];
 	for(int i = 0; i < Star.length; i++)
 	{
@@ -31,6 +31,7 @@ class NormalParticle
 	private int myColor;
 	NormalParticle()
 	{
+		myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
 		myAngle = Math.random()*(2*Math.PI);
 		radius = (Math.random()*500);
 		myX = 250 + radius*(Math.cos(myAngle));
@@ -46,6 +47,7 @@ class NormalParticle
 	}
 	void show()
 	{
+		stroke(myColor);
 		point((int)myX,(int)myY);
 	}
 }
