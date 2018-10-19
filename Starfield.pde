@@ -1,61 +1,73 @@
-NormalParticle[] Star;
+Particle[] Stars;
 void setup()
 {
-	size(500,500);
+	size(800,800);
 	background(0);
 	//noStroke();
 	//stroke(255);
-	Star = new NormalParticle[1000];
-	for(int i = 0; i < Star.length; i++)
+	Stars = new Particle[1000];
+	for(int i = 0; i < Stars.length; i++)
 	{
-		Star[i] = new NormalParticle();
+		Stars[i] = new NormalParticle();
 	}
+	//Stars[0] = new OddballParticle();
+	//Stars[1] = new JumboParticle();
 }
 void draw()
 {
-	for(int i = 0; i < Star.length; i++)
+	for(int i = 0; i < Stars.length; i++)
 	{
-		Star[i].show();
-		Star[i].move();
-		if(Star[i].myAngle > (2.5*Math.PI))
+		Stars[i].show();
+		Stars[i].move();
+		if(Stars[i].getmyAngle() > (2.5*Math.PI))
 		{
 			background(0);
-			for(int j = 0; j < Star.length; j++)
-				Star[j].myAngle = Math.random()*(2*Math.PI);
+			for(int j = 0; j < Stars.length; j++)
+				Stars[j].changemyAngle(Math.random()*(2*Math.PI));
 		}
-	}
-}
-class NormalParticle //implements Particle
-{
-	private double myX,myY,mySpd,myAngle,radius;
-	private int myColor;
-	NormalParticle()
-	{
-		myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
-		myAngle = Math.random()*(2*Math.PI);
-		radius = (Math.random()*500);
-		myX = 250 + radius*(Math.cos(myAngle));
-		myY = 250 + radius*(Math.sin(myAngle));
-		mySpd = .01;
-	}
-
-	void move()
-	{
-		myAngle += mySpd;
-		myX = 250 + radius*Math.cos(myAngle);
-		myY = 250 + radius*Math.sin(myAngle);
-	}
-	void show()
-	{
-		stroke(myColor);
-		point((int)myX,(int)myY);
 	}
 }
 interface Particle
 {
-	//your code here
+	public void move();
+	public void show();
+	public double getmyAngle();
+	public void changemyAngle();
 }
-class OddballParticle //uses an interface
+class NormalParticle implements Particle
+{
+	private double myX,myY,mySpd,myAngle,radius;
+	private int myColor;
+	public NormalParticle()
+	{
+		myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+		myAngle = Math.random()*(2*Math.PI);
+		radius = (Math.random()*800);
+		myX = 400 + radius*(Math.cos(myAngle));
+		myY = 400 + radius*(Math.sin(myAngle));
+		mySpd = .01;
+	}
+	public double getmyAngle()
+	{
+		return myAngle;
+	}
+	public void changemyAngle(double x)
+	{
+		myAngle = x;
+	}
+	public void move()
+	{
+		myAngle += mySpd;
+		myX = 400 + radius*Math.cos(myAngle);
+		myY = 400 + radius*Math.sin(myAngle);
+	}
+	public void show()
+	{
+		stroke(myColor);
+		point((float)myX,(float)myY);
+	}
+}
+class OddballParticle implements Particle
 {
 	//your code here
 }
