@@ -3,15 +3,14 @@ void setup()
 {
 	size(800,800);
 	background(0);
-	//noStroke();
-	//stroke(255);
+	noStroke();
 	Stars = new Particle[1000];
 	for(int i = 0; i < Stars.length; i++)
 	{
 		Stars[i] = new NormalParticle();
 	}
-	//Stars[0] = new OddballParticle();
-	//Stars[1] = new JumboParticle();
+	Stars[0] = new OddballParticle();
+	Stars[1] = new JumboParticle();
 }
 void draw()
 {
@@ -19,11 +18,14 @@ void draw()
 	{
 		Stars[i].show();
 		Stars[i].move();
-		if(Stars[i].getmyAngle() > (2.5*Math.PI))
+	}
+	for(int j = 1; j < Stars.length-1; j++)
+	{
+		if(Stars[j].getmyAngle() > (2.5*Math.PI))
 		{
 			background(0);
-			for(int j = 0; j < Stars.length; j++)
-				Stars[j].changemyAngle(Math.random()*(2*Math.PI));
+			for(int k = 1; k < Stars.length-1; k++)
+				Stars[k].changemyAngle(Math.random()*(2*Math.PI));
 		}
 	}
 }
@@ -32,13 +34,13 @@ interface Particle
 	public void move();
 	public void show();
 	public double getmyAngle();
-	public void changemyAngle();
+	public void changemyAngle(double angle);
 }
 class NormalParticle implements Particle
 {
-	private double myX,myY,mySpd,myAngle,radius;
-	private int myColor;
-	public NormalParticle()
+	public double myX,myY,mySpd,myAngle,radius;
+	public int myColor;
+	private NormalParticle()
 	{
 		myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
 		myAngle = Math.random()*(2*Math.PI);
@@ -51,9 +53,9 @@ class NormalParticle implements Particle
 	{
 		return myAngle;
 	}
-	public void changemyAngle(double x)
+	public void changemyAngle(double angle)
 	{
-		myAngle = x;
+		myAngle = angle;
 	}
 	public void move()
 	{
@@ -63,16 +65,76 @@ class NormalParticle implements Particle
 	}
 	public void show()
 	{
-		stroke(myColor);
-		point((float)myX,(float)myY);
+		fill(myColor);
+		ellipse((float)myX,(float)myY,3,3);
 	}
 }
 class OddballParticle implements Particle
 {
-	//your code here
+	private double myX,myY,mySpd,myAngle,radius;
+	private int myColor,xRadius,yRadius;
+	private OddballParticle()
+	{
+		//myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+		xRadius = (int)Math.random()*20+1;
+		yRadius = (int)Math.random()*20+1;
+		//myAngle = Math.random()*(2*Math.PI);
+		myAngle = 0;
+		radius = 100;
+		myX = myY = 400;
+		mySpd = .04;
+	}
+	public double getmyAngle()
+	{
+		return myAngle;
+	}
+	public void changemyAngle(double angle)
+	{
+		myAngle = angle;
+	}
+	public void move()
+	{
+		myAngle += mySpd;
+		xRadius = (int)(Math.random()*20+1);
+		yRadius = (int)(Math.random()*20+1);
+		myX = 400 + 2*radius*Math.cos(myAngle-(Math.PI/2));
+		myY = 400 + radius*Math.sin(2*myAngle);
+	}
+	public void show()
+	{
+		fill(255);
+		ellipse((float)myX,(float)myY,xRadius,yRadius);
+	}
 }
-class JumboParticle //uses inheritance
+class JumboParticle extends NormalParticle
 {
-	//your code here
+	private JumboParticle()
+	{
+		myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+		myAngle = Math.random()*(2*Math.PI);
+		radius = (Math.random()*800);
+		myX = 400 + radius*(Math.cos(myAngle));
+		myY = 400 + radius*(Math.sin(myAngle));
+		mySpd = .01;
+	}
+	/*public double getmyAngle()
+	{
+		return myAngle;
+	}
+	public void changemyAngle(double angle)
+	{
+		myAngle = angle;
+	}
+	public void move()
+	{
+		myAngle += mySpd;
+		myX = 400 + radius*Math.cos(myAngle);
+		myY = 400 + radius*Math.sin(myAngle);
+	}*/
+	public void show()
+	{
+		fill(myColor);
+		ellipse((float)myX,(float)myY,50,50);
+	}
 }
 
